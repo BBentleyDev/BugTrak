@@ -1,8 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const bodyParser = require('body-parser');
-// const cors = require('cors');
+const cors = require('cors');
 const connectDB = require("./config/database");
 const homeRoutes = require("./routes/home");
 
@@ -16,9 +15,8 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Maybe necessary?
-// app.use(cors());
-// app.use(bodyParser.json());
+//Cross domain
+app.use(cors());
 
 //Setup Routes For Which The Server Is Listening
 app.use("/", homeRoutes);

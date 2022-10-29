@@ -1,20 +1,17 @@
 const Task = require("../models/Task");
 
 module.exports = {
-  getHome: (req, res) => {
-    res.json({ message: 'Hello from server!' });
-  },
   addTask: async (req, res) => {
     try {
-      let todo = new Todo(req.body);
-      await todo.save();
-      // await Task.create({
-      //   task: req.body.task,
-      //   category: req.body.category,
-      //   inProgress: req.body.inProgress,
-      // });
+      await Task.create({
+        text: req.body.text,
+        category: req.body.category,
+        inProgress: req.body.inProgress,
+      });
+      console.log('added')
       res.status(200).send('Added new task!');
     } catch (err) {
+      console.log(err)
       res.status(400).send('Adding new task failed');
     }
   },
