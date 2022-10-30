@@ -14,7 +14,6 @@ function App() {
       const tasks = await fetch(`${API_URL}`)
       let taskList = await tasks.json()
       setTasks(taskList)
-      console.log(taskList)
     } catch (err) {
       console.log(err)
     }
@@ -41,16 +40,29 @@ function App() {
     }
   }
 
+
   // Delete Task
-  const deleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id))
+  const deleteTask = async (id) => {
+    try {
+      // Delete post from db
+      await fetch(`${API_URL}/${id}`, { method: "DELETE" })
+      setTasks(tasks.filter((task) => task._id !== id))
+      console.log("Task deleted");
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  // Toggle Reminder
-  const toggleReminder = (id) => {
-    setTasks(tasks.map((task) => 
-    task.id === id ? {...task, reminder: !task.reminder} 
-    : task))
+  // Toggle Progress
+  const toggleProgress = async (id) => {
+    try {
+      await fetch(`${API_URL}/${id}`, { method: "PUT" })
+      setTasks(tasks.map((task) => 
+      task._id === id ? {...task, inProgress: !task.inProgress} 
+      : task))
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -62,7 +74,7 @@ function App() {
       />
       {showAddTask && <AddTask onAdd={addTask}/>}
      {tasks.length > 0 ? 
-     <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/> 
+     <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleProgress}/> 
      : 'No Tasks to show'}
     </div>
   );
