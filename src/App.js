@@ -1,17 +1,34 @@
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 function App() {
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([])
+  const API_URL = 'http://localhost:3001'
+  
+  //Get Tasks
+  const getTasks = async () => {
+    try {
+      const tasks = await fetch(`${API_URL}`)
+      let taskList = await tasks.json()
+      setTasks(taskList)
+      console.log(taskList)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  useEffect( () => {
+    getTasks();
+  }, []);
 
   //Add Task
   const addTask = async (task) => {
     try {
       const newTask = {...task}
-      await fetch("http://localhost:3001/addTask", {
+      await fetch(`${API_URL}/addTask`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
