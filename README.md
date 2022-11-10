@@ -1,6 +1,6 @@
 # Introduction
 
-This is BugTrak, An app which allows users to monitor bugs, optimizations and features .
+This is BugTrak, an app which allows users to monitor bugs, optimizations and features .
 
 ---
 
