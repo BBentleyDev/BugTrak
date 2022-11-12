@@ -1,9 +1,11 @@
 const Task = require("../models/Task");
+const User = require("../models/User");
 
 module.exports = {
   addTask: async (req, res) => {
     try {
       await Task.create({
+        // user: req.body.id,
         text: req.body.text,
         category: req.body.category,
         inProgress: req.body.inProgress,
@@ -17,7 +19,7 @@ module.exports = {
   },
   getTasks: async (req, res) => {
     try {
-      const tasks = await Task.find()
+      const tasks = await Task.find({ user: req.user.id })
       res.json(tasks)
     } catch (err) {
       console.log(err);
@@ -27,6 +29,21 @@ module.exports = {
     try {
       // Delete post from db
       await Task.remove({ _id: req.params.id });
+
+      const user = await User.findById(req.user.id)
+
+      //Check for user
+      if (!user) {
+        res.status(401)
+        throw new Error('User not found')
+      }
+  
+      //Make sure logged in user matches creator of goal
+      if(task.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorized')
+      }
+
       console.log("Deleted from DB");
       res.status(200).send('deleted task!');
     } catch (err) {
@@ -49,5 +66,34 @@ module.exports = {
       console.log(err)
     }
   },
+  updateTask: async (req, res) => {
+    const task = await Task.findById(req.params.id)
+
+    if (!task) {
+      res.status(400)
+      throw new Error ('Goal not found')
+    }
+
+    const user = await User.findById(req.user.id)
+
+    //Check for user
+    if (!user) {
+      res.status(401)
+      throw new Error('User not found')
+    }
+
+    //Make sure logged in user matches creator of goal
+    if(task.user.toString() !== user.id) {
+      res.status(401)
+      throw new Error('User not authorized')
+    }
+
+    await Task.findOneAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+  }
 };
+
+//Routes from video
+
 

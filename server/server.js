@@ -3,7 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const cors = require('cors');
 const connectDB = require("./config/database");
-const homeRoutes = require("./routes/home");
+const taskRoutes = require("./routes/task");
+const userRoutes = require("./routes/user");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -19,7 +20,8 @@ app.use(express.json());
 app.use(cors());
 
 //Setup Routes For Which The Server Is Listening
-app.use("/", homeRoutes);
+app.use("/tasks", taskRoutes);
+app.use("/users", userRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {

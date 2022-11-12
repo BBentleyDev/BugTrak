@@ -1,6 +1,7 @@
 import Header from './components/Header'
 import Tasks from './components/Tasks'
 import AddTask from './components/AddTask'
+import Dashboard from './components/Dashboard'
 import { useState, useEffect } from 'react'
 
 function App() {
