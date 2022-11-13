@@ -8,15 +8,7 @@ const TaskSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    required: true,
-  },
-  category: {
-    type: String,
-    required: true,
-  },
-  inProgress: {
-    type: Boolean,
-    required: false,
+    required: [true, 'Please add a text value'],
   },
 }, 
 {

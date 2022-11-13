@@ -5,10 +5,8 @@ module.exports = {
   addTask: async (req, res) => {
     try {
       await Task.create({
-        // user: req.body.id,
         text: req.body.text,
-        category: req.body.category,
-        inProgress: req.body.inProgress,
+        user: req.user.id,
       });
       console.log('added')
       res.status(200).send('Added new task!');
@@ -30,16 +28,14 @@ module.exports = {
       // Delete post from db
       await Task.remove({ _id: req.params.id });
 
-      const user = await User.findById(req.user.id)
-
       //Check for user
-      if (!user) {
+      if (!req.user) {
         res.status(401)
         throw new Error('User not found')
       }
   
       //Make sure logged in user matches creator of goal
-      if(task.user.toString() !== user.id) {
+      if(task.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
       }
@@ -74,16 +70,14 @@ module.exports = {
       throw new Error ('Goal not found')
     }
 
-    const user = await User.findById(req.user.id)
-
     //Check for user
-    if (!user) {
+    if (!req.user) {
       res.status(401)
       throw new Error('User not found')
     }
 
     //Make sure logged in user matches creator of goal
-    if(task.user.toString() !== user.id) {
+    if(task.user.toString() !== req.user.id) {
       res.status(401)
       throw new Error('User not authorized')
     }

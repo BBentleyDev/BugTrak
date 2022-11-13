@@ -5,7 +5,7 @@ const { protect } = require("../middleware/authMiddleware");
 
 //Main Routes - simplified for now
 router.get("/", protect, taskController.getTasks);
-router.post("/addTask", protect, taskController.addTask);
+router.post("/", protect, taskController.addTask);
 router.delete("/:id", protect, taskController.deleteTask);
 router.put("/:id", protect, taskController.toggleProgress);
 
