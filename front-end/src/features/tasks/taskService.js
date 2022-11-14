@@ -30,9 +30,23 @@ const getTasks = async (token) => {
     return response.data
 }
 
+//Delete tasks
+const deleteTask = async (taskId, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+
+    const response = await axios.delete(API_URL + taskId, config)
+
+    return response.data
+}
+
 const taskService = {
     createTask,
     getTasks,
+    deleteTask,
 }
 
 export default taskService
