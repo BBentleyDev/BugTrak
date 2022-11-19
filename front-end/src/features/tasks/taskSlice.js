@@ -6,7 +6,7 @@ const initialState = {
     isError: false,
     isSuccess: false,
     isLoading: false,
-    message: ''
+    message: '',
 }
 
 //Create new task
@@ -61,7 +61,12 @@ export const taskSlice = createSlice({
     name: 'task',
     initialState,
     reducers: {
-        reset: (state) => initialState
+        reset: (state) => {
+            state.isLoading = false
+            state.isError = false
+            state.isSuccess = false
+            state.message = ''
+        }
     },
     extraReducers: (builder) => {
         builder
