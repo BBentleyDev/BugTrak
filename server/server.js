@@ -7,6 +7,7 @@ const dotenv = require('dotenv').config()
 const connectDB = require("./config/database");
 const taskRoutes = require("./routes/task");
 const userRoutes = require("./routes/user");
+const PORT = 3001;
 
 //Use .env file in config folder
 // require("dotenv").config({ path: "./config/.env" });
@@ -35,6 +36,6 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 //Server Running
-app.listen(process.env.PORT || 3001, () => {
+app.listen(process.env.PORT || PORT, () => {
   console.log("Server is running, you better catch it!");
 });
