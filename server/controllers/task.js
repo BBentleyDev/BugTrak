@@ -89,7 +89,3 @@ module.exports = {
     })
   }
 };
-
-//Routes from video
-
-

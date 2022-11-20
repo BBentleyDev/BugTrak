@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3001/tasks/'
+const API_URL = '/tasks/'
 
 
 //Create task

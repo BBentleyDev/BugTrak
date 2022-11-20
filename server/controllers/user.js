@@ -10,15 +10,16 @@ const generateToken = (id) => {
 module.exports = {
     addUser: async (req, res) => {
         const { name, email, password } = req.body
+
         if (!name || !email || !password) {
             res.status(400)
             throw new Error('Please fill in all fields')
         }
 
         //Check if user exists
-        const userExists = await User.findOne({email})
+        const userExists = await User.findOne({ email })
 
-        if(userExists) {
+        if (userExists) {
             res.status(400)
             throw new Error("User already exists")
         }
